@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería · B&P Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#d4a017', 'primary-light': '#f4c430', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="galeria" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Portafolio</p>
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Nuestra galería</h1>
+        <p class="text-gray-300 text-lg max-w-2xl mx-auto">Una muestra de nuestro trabajo. Cada corte, cada color, cada estilo cuenta una historia.</p>
+      </div>
+    </section>
+
+    <section class="py-10 border-b border-primary/10 sticky top-20 bg-background-dark/95 backdrop-blur z-30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center gap-3" id="filters">
+          <button data-filter="todos" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary bg-primary text-black transition-all">Todos</button>
+          <button data-filter="barberia" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary/30 text-gray-300 hover:border-primary transition-all">Barbería</button>
+          <button data-filter="peluqueria" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary/30 text-gray-300 hover:border-primary transition-all">Peluquería</button>
+          <button data-filter="antes-despues" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary/30 text-gray-300 hover:border-primary transition-all">Antes & Después</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="galeriaGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    const GALERIA = [
+      { cat: 'barberia', img: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80' },
+      { cat: 'barberia', img: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80' },
+      { cat: 'barberia', img: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80' },
+      { cat: 'barberia', img: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80' },
+      { cat: 'barberia', img: 'https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?w=600&q=80' },
+      { cat: 'antes-despues', img: 'https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?w=600&q=80' },
+      { cat: 'antes-despues', img: 'https://images.unsplash.com/photo-1622286346003-c4b1be0b8a85?w=600&q=80' },
+      { cat: 'antes-despues', img: 'https://images.unsplash.com/photo-1554519515-242161756769?w=600&q=80' },
+      { cat: 'barberia', img: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80' },
+      { cat: 'peluqueria', img: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=80' }
+    ];
+
+    function pageInit() {
+      const grid = document.getElementById('galeriaGrid');
+      const filters = document.querySelectorAll('.filter-btn');
+
+      function render(filter) {
+        const list = filter === 'todos' ? GALERIA : GALERIA.filter(g => g.cat === filter);
+        grid.innerHTML = list.map((g, i) => `
+          <div class="galeria-item aspect-square ${i % 5 === 0 ? 'md:col-span-2 md:row-span-2' : ''}" data-cat="${g.cat}">
+            <img src="${g.img}" alt="" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+        `).join('');
+        grid.querySelectorAll('.galeria-item').forEach(item => {
+          item.addEventListener('click', () => openLightbox(item.querySelector('img').src));
+        });
+      }
+
+      function openLightbox(src) {
+        const lb = document.createElement('div');
+        lb.className = 'lightbox';
+        lb.innerHTML = `<img src="${src}" alt="" /><button class="absolute top-6 right-6 text-white text-3xl hover:text-primary transition-colors">&times;</button>`;
+        lb.addEventListener('click', () => lb.remove());
+        document.body.appendChild(lb);
+      }
+
+      filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filters.forEach(b => { b.classList.remove('bg-primary', 'text-black'); b.classList.add('text-gray-300'); });
+          btn.classList.add('bg-primary', 'text-black');
+          btn.classList.remove('text-gray-300');
+          render(btn.dataset.filter);
+        });
+      });
+
+      render('todos');
+    }
+  </script>
+</body>
+</html>

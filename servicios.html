@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios · B&P Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#d4a017', 'primary-light': '#f4c430', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="servicios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary uppercase tracking-[0.3em] text-xs mb-3 font-medium">Nuestros servicios</p>
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Catálogo completo</h1>
+        <p class="text-gray-300 text-lg max-w-2xl mx-auto">Descubre todos los servicios que tenemos para ti. Selecciona tu favorito y reserva tu cita en segundos.</p>
+      </div>
+    </section>
+
+    <section class="py-12 border-b border-primary/10 sticky top-20 bg-background-dark/95 backdrop-blur z-30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center gap-3" id="filters">
+          <button data-filter="todos" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary bg-primary text-black transition-all">Todos</button>
+          <button data-filter="barberia" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary/30 text-gray-300 hover:border-primary transition-all">Barbería</button>
+          <button data-filter="peluqueria" class="filter-btn px-6 py-2 rounded-full text-sm font-semibold border-2 border-primary/30 text-gray-300 hover:border-primary transition-all">Peluquería</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="serviciosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-background-card/40 border-t border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" style="font-family: 'Playfair Display', serif;">¿No encuentras lo que buscas?</h2>
+        <p class="text-gray-300 mb-8 max-w-xl mx-auto">Contáctanos y haremos un servicio personalizado para ti.</p>
+        <a href="contacto.html" class="btn-outline">Contáctanos</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const grid = document.getElementById('serviciosGrid');
+      const filters = document.querySelectorAll('.filter-btn');
+
+      function render(filter) {
+        const list = filter === 'todos' ? SERVICIOS : SERVICIOS.filter(s => s.categoria === filter);
+        grid.innerHTML = list.map(s => `
+          <article class="card-hover bg-background-card border border-gray-800 rounded-xl overflow-hidden flex flex-col" data-cat="${s.categoria}">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src="${s.imagen}" alt="${s.nombre}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-start justify-between mb-2">
+                <h3 class="text-xl font-bold text-white" style="font-family: 'Playfair Display', serif;">${s.nombre}</h3>
+                <span class="text-xs uppercase tracking-wider text-primary font-semibold">${s.categoria}</span>
+              </div>
+              <p class="text-gray-400 text-sm mb-4 flex-1">${s.descripcion}</p>
+              <div class="flex items-center justify-between pt-4 border-t border-gray-800">
+                <div>
+                  <p class="text-primary text-2xl font-bold" style="font-family: 'Playfair Display', serif;">S/ ${s.precio}</p>
+                  <p class="text-gray-500 text-xs">${s.duracion} minutos</p>
+                </div>
+                <a href="reserva.html?servicio=${s.id}" class="btn-primary text-sm px-5 py-2">Reservar</a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filters.forEach(b => { b.classList.remove('bg-primary', 'text-black'); b.classList.add('text-gray-300'); });
+          btn.classList.add('bg-primary', 'text-black');
+          btn.classList.remove('text-gray-300');
+          render(btn.dataset.filter);
+        });
+      });
+
+      render('todos');
+    }
+  </script>
+</body>
+</html>

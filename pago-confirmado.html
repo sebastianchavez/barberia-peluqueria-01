@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago Confirmado · B&P Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#d4a017', 'primary-light': '#f4c430', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-10">
+        <div class="checkmark-circle mx-auto">
+          <div class="background"></div>
+          <div class="checkmark"></div>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-white mt-8 mb-3" style="font-family: 'Playfair Display', serif;">¡Pago exitoso!</h1>
+        <p class="text-gray-300 text-lg">Tu transacción se ha completado correctamente</p>
+        <div class="inline-flex items-center gap-2 mt-4 text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-4 py-1.5">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          Transacción segura verificada
+        </div>
+      </div>
+
+      <div id="detallePago" class="bg-background-card border border-gray-800 rounded-2xl p-8 mb-6"></div>
+
+      <div class="bg-gradient-to-br from-primary/10 to-transparent border border-primary/30 rounded-2xl p-6 mb-8 text-center">
+        <p class="text-xs text-primary uppercase tracking-widest font-semibold mb-1">Código de operación</p>
+        <p id="codigoOp" class="text-2xl font-bold text-primary tracking-widest font-mono">OP-00000000</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <a href="perfil.html" class="btn-primary">
+          Ver mis reservas
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+        <a href="index.html" class="btn-outline">Volver al inicio</a>
+      </div>
+
+      <div class="text-center mt-10 text-sm text-gray-400">
+        <p>Hemos enviado un comprobante de pago a tu correo.</p>
+        <p class="mt-2">Si tienes alguna duda, <a href="contacto.html" class="text-primary hover:underline">contáctanos</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('pago-confirmado.html')) return;
+      const data = Storage.get('bps_pago_exitoso');
+      if (!data) { window.location.href = 'perfil.html'; return; }
+      const r = Reservas.get(data.reservaId);
+      if (!r) { window.location.href = 'perfil.html'; return; }
+
+      const servicio = UI.servicioById(r.servicioId);
+      const prof = UI.profesionalById(r.profesionalId);
+      const codigoOp = 'OP-' + Date.now().toString().slice(-8);
+      document.getElementById('codigoOp').textContent = codigoOp;
+
+      const metodosMap = {
+        tarjeta: { label: 'Tarjeta de crédito/débito', icon: '<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>' },
+        yape: { label: 'Yape / Plin', icon: '<div class="h-5 w-5 bg-purple-500 rounded text-white text-xs font-bold flex items-center justify-center">Y</div>' },
+        efectivo: { label: 'Efectivo (pago en local)', icon: '<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>' }
+      };
+      const m = metodosMap[data.metodo] || metodosMap.tarjeta;
+
+      document.getElementById('detallePago').innerHTML = `
+        <h2 class="text-xl font-bold text-white mb-6" style="font-family: 'Playfair Display', serif;">Detalle del pago</h2>
+        <ul class="space-y-3 text-sm">
+          <li class="flex justify-between pb-3 border-b border-gray-800">
+            <span class="text-gray-400">Servicio</span>
+            <span class="text-white font-semibold">${servicio.nombre}</span>
+          </li>
+          <li class="flex justify-between pb-3 border-b border-gray-800">
+            <span class="text-gray-400">Profesional</span>
+            <span class="text-white font-semibold">${prof.nombre}</span>
+          </li>
+          <li class="flex justify-between pb-3 border-b border-gray-800">
+            <span class="text-gray-400">Fecha y hora</span>
+            <span class="text-white font-semibold">${UI.formatDate(r.fecha)}, ${r.hora}</span>
+          </li>
+          <li class="flex justify-between pb-3 border-b border-gray-800">
+            <span class="text-gray-400">Método de pago</span>
+            <span class="text-white font-semibold flex items-center gap-2">${m.icon} ${m.label}</span>
+          </li>
+          <li class="flex justify-between pb-3 border-b border-gray-800">
+            <span class="text-gray-400">Subtotal</span>
+            <span class="text-white font-semibold">${UI.formatPrice(data.monto / 1.18)}</span>
+          </li>
+          <li class="flex justify-between pb-3 border-b border-gray-800">
+            <span class="text-gray-400">IGV (18%)</span>
+            <span class="text-white font-semibold">${UI.formatPrice(data.monto * 0.18 / 1.18)}</span>
+          </li>
+          <li class="flex justify-between pt-2 text-base">
+            <span class="text-white font-bold">Total pagado</span>
+            <span class="text-primary text-2xl font-bold" style="font-family: 'Playfair Display', serif;">${UI.formatPrice(data.monto)}</span>
+          </li>
+        </ul>
+      `;
+
+      Storage.remove('bps_pago_exitoso');
+    }
+  </script>
+</body>
+</html>

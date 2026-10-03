@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro · B&P Studio</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#d4a017', 'primary-light': '#f4c430', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Playfair Display'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="" class="bg-background-dark text-gray-200 font-sans">
+  <div class="min-h-screen flex flex-col">
+    <main class="flex-1 flex">
+      <div class="hidden lg:flex lg:w-1/2 relative bg-cover bg-center" style="background-image: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.7)), url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200&q=80');">
+        <div class="absolute inset-0 flex flex-col justify-between p-12 text-white">
+          <a href="index.html" class="flex items-center gap-3 z-10">
+            <svg class="h-10 w-10 text-primary" viewBox="0 0 48 48" fill="none"><path d="M14 6C14 6 8 10 8 18C8 22 10 24 12 24C13 24 14 23 14 22V6Z" fill="currentColor"/><path d="M34 6C34 6 40 10 40 18C40 22 38 24 36 24C35 24 34 23 34 22V6Z" fill="currentColor"/><path d="M18 14H30V18C30 19 29 20 28 20H20C19 20 18 19 18 18V14Z" fill="currentColor"/><path d="M22 20H26V42C26 43 25 44 24 44C23 44 22 43 22 42V20Z" fill="currentColor"/></svg>
+            <div>
+              <h2 class="text-xl font-bold leading-tight" style="font-family: 'Playfair Display', serif;">B&P Studio</h2>
+              <p class="text-xs uppercase tracking-widest text-primary/80">Barbería & Peluquería</p>
+            </div>
+          </a>
+          <div class="z-10">
+            <h1 class="text-5xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Únete a B&P Studio</h1>
+            <p class="text-lg text-gray-200 max-w-md">Crea tu cuenta y accede a beneficios exclusivos, gestiona tus reservas y disfruta de una experiencia personalizada.</p>
+            <div class="mt-8 space-y-3 text-sm text-gray-200">
+              <p class="flex items-center gap-2"><svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Reservas 24/7 sin esperas</p>
+              <p class="flex items-center gap-2"><svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Historial completo de servicios</p>
+              <p class="flex items-center gap-2"><svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Descuentos y promociones</p>
+              <p class="flex items-center gap-2"><svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Programa de fidelidad</p>
+            </div>
+          </div>
+          <div class="z-10 text-xs text-gray-400">© 2024 B&P Studio</div>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+        <div class="w-full max-w-md">
+          <a href="index.html" class="lg:hidden flex items-center gap-3 mb-8 justify-center">
+            <svg class="h-9 w-9 text-primary" viewBox="0 0 48 48" fill="none"><path d="M14 6C14 6 8 10 8 18C8 22 10 24 12 24C13 24 14 23 14 22V6Z" fill="currentColor"/><path d="M34 6C34 6 40 10 40 18C40 22 38 24 36 24C35 24 34 23 34 22V6Z" fill="currentColor"/><path d="M18 14H30V18C30 19 29 20 28 20H20C19 20 18 19 18 18V14Z" fill="currentColor"/><path d="M22 20H26V42C26 43 25 44 24 44C23 44 22 43 22 42V20Z" fill="currentColor"/></svg>
+            <div>
+              <h2 class="text-lg font-bold text-white leading-tight" style="font-family: 'Playfair Display', serif;">B&P Studio</h2>
+              <p class="text-[10px] uppercase tracking-widest text-primary/80">Barbería & Peluquería</p>
+            </div>
+          </a>
+          <div class="text-center mb-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-2" style="font-family: 'Playfair Display', serif;">Crear cuenta</h2>
+            <p class="text-gray-400">Completa el formulario para registrarte</p>
+            <div id="planPreselect" class="hidden mt-4 inline-block bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 text-sm">
+              <span class="text-primary font-semibold">Plan seleccionado: <span id="planName"></span></span>
+            </div>
+          </div>
+
+          <form id="registerForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-1">Nombre completo</label>
+              <input type="text" id="nombre" required minlength="3" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Juan Pérez"/>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-1">Teléfono</label>
+              <input type="tel" id="telefono" required class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="+51 999 000 000"/>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+              <input type="email" id="email" required class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="tu@email.com"/>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Contraseña</label>
+                <input type="password" id="password" required minlength="6" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="••••••••"/>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Confirmar</label>
+                <input type="password" id="password2" required minlength="6" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="••••••••"/>
+              </div>
+            </div>
+
+            <label class="flex items-start gap-3 cursor-pointer pt-2">
+              <input type="checkbox" id="terminos" required class="mt-1 rounded bg-background-card border-gray-700 text-primary focus:ring-primary focus:ring-offset-background-dark"/>
+              <span class="text-sm text-gray-300">Acepto los <a href="terminos.html" target="_blank" class="text-primary hover:underline">Términos y Condiciones</a> y la <a href="privacidad.html" target="_blank" class="text-primary hover:underline">Política de Privacidad</a></span>
+            </label>
+
+            <button type="submit" class="btn-primary w-full py-3 mt-2">
+              Crear mi cuenta
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </form>
+
+          <p class="text-center text-sm text-gray-400 mt-8">
+            ¿Ya tienes cuenta? <a href="inicio-sesion.html" class="text-primary font-semibold hover:text-primary-light transition-colors">Inicia sesión</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get('plan');
+      if (plan) {
+        const map = { basico: 'Básico · S/ 89/mes', premium: 'Premium · S/ 159/mes', vip: 'VIP · S/ 289/mes' };
+        document.getElementById('planPreselect').classList.remove('hidden');
+        document.getElementById('planName').textContent = map[plan] || plan;
+      }
+
+      const form = document.getElementById('registerForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = {
+          nombre: document.getElementById('nombre').value.trim(),
+          telefono: document.getElementById('telefono').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value,
+          plan: plan
+        };
+        const password2 = document.getElementById('password2').value;
+        if (data.password !== password2) { UI.toast('Las contraseñas no coinciden', 'error'); return; }
+
+        const res = Auth.register(data);
+        if (!res.ok) { UI.toast(res.error, 'error'); return; }
+        UI.toast('¡Cuenta creada con éxito! Iniciando sesión...');
+        Auth.login(data.email, data.password);
+        setTimeout(() => window.location.href = 'perfil.html', 900);
+      });
+    }
+  </script>
+</body>
+</html>
