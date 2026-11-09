@@ -1,19 +1,19 @@
 const STORAGE_KEYS = {
-  USERS: 'bps_users',
-  SESSION: 'bps_session',
-  RESERVAS: 'bps_reservas',
-  RESERVA_DRAFT: 'bps_reserva_draft',
-  PAGO_DRAFT: 'bps_pago_draft',
-  THEME: 'bps_theme'
+  USERS: 'bps_users_clp_v1',
+  SESSION: 'bps_session_clp_v1',
+  RESERVAS: 'bps_reservas_clp_v1',
+  RESERVA_DRAFT: 'bps_reserva_draft_clp_v1',
+  PAGO_DRAFT: 'bps_pago_draft_clp_v1',
+  THEME: 'bps_theme_clp_v1'
 };
 
 const SERVICIOS = [
-  { id: 'sb1', categoria: 'barberia', nombre: 'Corte Clásico', descripcion: 'Cortes atemporales adaptados a tu estilo.', duracion: 30, precio: 35, imagen: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80' },
-  { id: 'sb2', categoria: 'barberia', nombre: 'Perfilado de Barba', descripcion: 'Perfilado y diseño de barba con navaja.', duracion: 30, precio: 25, imagen: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80' },
-  { id: 'sb3', categoria: 'barberia', nombre: 'Afeitado Toalla Caliente', descripcion: 'Afeitado clásico con toalla caliente y aceites.', duracion: 45, precio: 40, imagen: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80' },
-  { id: 'sp1', categoria: 'peluqueria', nombre: 'Corte y Peinado', descripcion: 'Cortes modernos y peinados para damas.', duracion: 60, precio: 55, imagen: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80' },
-  { id: 'sp2', categoria: 'peluqueria', nombre: 'Coloración', descripcion: 'Coloración profesional con productos premium.', duracion: 120, precio: 120, imagen: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80' },
-  { id: 'sp3', categoria: 'peluqueria', nombre: 'Tratamiento Capilar', descripcion: 'Hidratación profunda y reparación.', duracion: 90, precio: 80, imagen: 'https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=800&q=80' }
+  { id: 'sb1', categoria: 'barberia', nombre: 'Corte Clásico', descripcion: 'Cortes atemporales adaptados a tu estilo.', duracion: 30, precio: 8750, imagen: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80' },
+  { id: 'sb2', categoria: 'barberia', nombre: 'Perfilado de Barba', descripcion: 'Perfilado y diseño de barba con navaja.', duracion: 30, precio: 6250, imagen: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80' },
+  { id: 'sb3', categoria: 'barberia', nombre: 'Afeitado Toalla Caliente', descripcion: 'Afeitado clásico con toalla caliente y aceites.', duracion: 45, precio: 10000, imagen: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80' },
+  { id: 'sp1', categoria: 'peluqueria', nombre: 'Corte y Peinado', descripcion: 'Cortes modernos y peinados para damas.', duracion: 60, precio: 13750, imagen: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80' },
+  { id: 'sp2', categoria: 'peluqueria', nombre: 'Coloración', descripcion: 'Coloración profesional con productos premium.', duracion: 120, precio: 30000, imagen: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80' },
+  { id: 'sp3', categoria: 'peluqueria', nombre: 'Tratamiento Capilar', descripcion: 'Hidratación profunda y reparación.', duracion: 90, precio: 20000, imagen: 'https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=800&q=80' }
 ];
 
 const PROFESIONALES = [
@@ -52,8 +52,8 @@ const Auth = {
     const users = Storage.get(STORAGE_KEYS.USERS, []);
     if (users.length === 0) {
       Storage.set(STORAGE_KEYS.USERS, [
-        { id: 'u1', nombre: 'Juan Pérez', email: 'juan@test.com', telefono: '+51 999 111 222', password: '123456', foto: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80' },
-        { id: 'u2', nombre: 'María López', email: 'maria@test.com', telefono: '+51 999 333 444', password: '123456', foto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80' }
+        { id: 'u1', nombre: 'Juan Pérez', email: 'juan@test.com', telefono: '+56 9 9911 1222', password: '123456', foto: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80' },
+        { id: 'u2', nombre: 'María López', email: 'maria@test.com', telefono: '+56 9 9933 3444', password: '123456', foto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80' }
       ]);
     }
   },
@@ -95,9 +95,9 @@ const Reservas = {
     const list = Storage.get(STORAGE_KEYS.RESERVAS, null);
     if (list === null) {
       const samples = [
-        { id: 'r1', userId: 'u1', servicioId: 'sb1', profesionalId: 'pr1', fecha: this._futureDate(3), hora: '10:00', estado: 'confirmada', pago: 'pagado', metodoPago: 'tarjeta', precio: 35, createdAt: Date.now() - 86400000 * 2 },
-        { id: 'r2', userId: 'u1', servicioId: 'sp1', profesionalId: 'pr3', fecha: this._futureDate(7), hora: '15:00', estado: 'pendiente', pago: 'pendiente', metodoPago: null, precio: 55, createdAt: Date.now() - 86400000 },
-        { id: 'r3', userId: 'u1', servicioId: 'sb2', profesionalId: 'pr2', fecha: this._futureDate(-5), hora: '11:00', estado: 'completada', pago: 'pagado', metodoPago: 'yape', precio: 25, createdAt: Date.now() - 86400000 * 10 }
+        { id: 'r1', userId: 'u1', servicioId: 'sb1', profesionalId: 'pr1', fecha: this._futureDate(3), hora: '10:00', estado: 'confirmada', pago: 'pagado', metodoPago: 'tarjeta', precio: 8750, createdAt: Date.now() - 86400000 * 2 },
+        { id: 'r2', userId: 'u1', servicioId: 'sp1', profesionalId: 'pr3', fecha: this._futureDate(7), hora: '15:00', estado: 'pendiente', pago: 'pendiente', metodoPago: null, precio: 13750, createdAt: Date.now() - 86400000 },
+        { id: 'r3', userId: 'u1', servicioId: 'sb2', profesionalId: 'pr2', fecha: this._futureDate(-5), hora: '11:00', estado: 'completada', pago: 'pagado', metodoPago: 'yape', precio: 6250, createdAt: Date.now() - 86400000 * 10 }
       ];
       Storage.set(STORAGE_KEYS.RESERVAS, samples);
     }
@@ -141,9 +141,9 @@ const UI = {
   formatDate(iso) {
     if (!iso) return '';
     const d = new Date(iso + 'T00:00:00');
-    return d.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+    return d.toLocaleDateString('es-CL', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
   },
-  formatPrice(n) { return 'S/ ' + Number(n).toFixed(2); },
+  formatPrice(n) { return 'CLP$ ' + Number(n).toLocaleString('es-CL', { maximumFractionDigits: 0 }); },
   reservaPrecio(r) {
     if (r && typeof r.precio === 'number') return r.precio;
     const s = r ? SERVICIOS.find(x => x.id === r.servicioId) : null;
@@ -317,15 +317,15 @@ function buildFooter() {
           <ul class="space-y-3 text-sm text-gray-400">
             <li class="flex items-start gap-2">
               <svg class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-              Av. La Marina 123, Lima
+              Av. La Marina 123, Santiago
             </li>
             <li class="flex items-start gap-2">
               <svg class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-              +51 999 555 111
+              +56 9 9955 5111
             </li>
             <li class="flex items-start gap-2">
               <svg class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-              hola@bpstudio.pe
+              hola@bpstudio.cl
             </li>
           </ul>
           <div class="flex gap-3 mt-5">
@@ -343,7 +343,7 @@ function buildFooter() {
       </div>
       <div class="border-t border-primary/20 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-sm text-gray-500">© 2024 B&P Studio. Todos los derechos reservados.</p>
-        <p class="text-xs text-gray-600">Lima, Perú · Hecho con estilo</p>
+        <p class="text-xs text-gray-600">Santiago, Chile · Hecho con estilo</p>
       </div>
     </div>
   </footer>`;

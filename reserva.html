@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es-CL" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -70,7 +70,7 @@
             <div class="flex justify-between"><span class="text-gray-400">Hora:</span><span id="r-hora" class="text-white font-medium">—</span></div>
             <div class="border-t border-gray-800 pt-3 mt-3 flex justify-between text-base">
               <span class="text-white font-semibold">Total:</span>
-              <span id="r-precio" class="text-primary text-xl font-bold" style="font-family: 'Playfair Display', serif;">S/ 0.00</span>
+              <span id="r-precio" class="text-primary text-xl font-bold" style="font-family: 'Playfair Display', serif;">CLP$ 0</span>
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@
                         <p class="text-gray-400 text-xs mt-0.5 line-clamp-2">${s.descripcion}</p>
                         <div class="flex items-center justify-between mt-2">
                           <span class="text-xs text-primary uppercase">${s.categoria}</span>
-                          <span class="text-primary font-bold">S/ ${s.precio}</span>
+                          <span class="text-primary font-bold">CLP$ ${Number(s.precio).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</span>
                         </div>
                       </div>
                     </div>
